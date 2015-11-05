@@ -1,0 +1,22 @@
+{
+  "name": "personal-website",
+  "description": "My Personal Website",
+  "main": "index.js",
+  "authors": [
+    "Cian O'Connor"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.5.3"
+  }
+}
