@@ -4,18 +4,15 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        sass: {
-            options: {
-                includePaths: ['bower_components/foundation/scss']
-            },
+        compass: {
             dist: {
                 options: {
+
+                    importPath: 'bower_components/foundation/scss',
+                    sassDir: 'src/scss',
+                    cssDir: 'site/css',
                     outputStyle: 'compressed',
-                    sourceMap: true,
                 },
-                files: {
-                    'site/css/app.css': 'src/scss/app.scss'
-                }
             }
         },
 
@@ -23,8 +20,19 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     // includes files within path
-                    {expand: true, src: ['bower_components/foundation/js/foundation/*'], flatten: true, dest: 'site/lib/', filter: 'isFile'},
-                    {expand: true, src: ['bower_components/foundation/js/vendor/*'], flatten: true, dest: 'site/lib/', filter: 'isFile'},
+                    {
+                        expand: true,
+                        src: ['bower_components/foundation/js/foundation/*'],
+                        flatten: true,
+                        dest: 'site/lib/',
+                        filter: 'isFile'
+                    }, {
+                        expand: true,
+                        src: ['bower_components/foundation/js/vendor/*'],
+                        flatten: true,
+                        dest: 'site/lib/',
+                        filter: 'isFile'
+                    },
                 ],
             },
         },
@@ -47,14 +55,18 @@ module.exports = function(grunt) {
 
         watch: {
             bake: {
-                files: [ "src/include/**", "src/html/**" ],
+                files: ["src/include/**", "src/html/**"],
                 tasks: "bake",
-                options: {livereload: true}
+                options: {
+                    livereload: true
+                }
             },
             sass: {
                 files: 'src/scss/**/*.scss',
-                tasks: "sass",
-                options: {livereload: true}
+                tasks: "compass",
+                options: {
+                    livereload: true
+                }
             }
         },
         connect: {
@@ -70,11 +82,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-connect");
     grunt.loadNpmTasks("grunt-bake");
-    grunt.loadNpmTasks("grunt-sass");
+    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Default task(s).
     grunt.registerTask('server', ['build', 'connect:server', 'watch']);
-    grunt.registerTask('build', ['copy', 'bake', 'sass']);
+    grunt.registerTask('build', ['copy', 'bake', 'compass']);
     grunt.registerTask('default', ['build', 'watch']);
 };
